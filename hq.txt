@@ -1,0 +1,34 @@
+hive> create database dsbda;
+hive> use dsbda;
+hive> create external table empdata( ename string, esal int)
+> row format delimited fields terminated by "," stored as textfile location
+> "/home/hduser/Desktop/empdata";
+hive> show tables;
+hive> load data local inpath '/home/hduser/empdb.txt' into table empdata;
+hive> select * from empdata;
+hive> describe empdata;
+hive> alter table empdata change esal esal string;
+hive> describe empdata;
+hive> drop table empdata;
+hive> create table empdbnew(eno int, ename string, esal int) row format delimited fields
+hive> load data local inpath '/home/hduser/empdbnew.txt' into table empdbnew;
+hive> select * from empdbnew;
+hive> create table empinfo(empno int, empgrade string) row format delimited fields terminated by ',' stored as textfile;
+hive> load data local inpath '/home/hduser/empinfo.txt' into table empinfo;
+hive> select * from empinfo;
+hive> select * from empdbnew;
+hive> describe empinfo;
+hive> describe empdbnew;
+hive> select eno,ename,esal,empno,empgrade from empdbnew join empinfo on eno=empno;
+hive> create table flight(id int, Source string, Dest string, at string, dt string, delay int)
+> row format delimited fields terminated by "," stored as textfile location
+> "/home/hduser/Desktop/flight";
+hive> load data local inpath '/home/hduser/flight.txt' into table flight;
+hive> select * from flight;
+hive> create index flight_index
+> on table flight(delay)
+> AS 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler'
+> WITH DEFERRED REBUILD;
+hive> show index on flight;
+hive> select avg(delay) from flight;
+

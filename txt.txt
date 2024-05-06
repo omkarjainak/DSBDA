@@ -1,0 +1,57 @@
+Linear Regression
+ df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%Y')
+ df['Time'] = pd.to_datetime(df['Time'], format='%H.%M.%S')
+ # Now you can convert the time column to datetime
+ df['Time'] = pd.to_datetime(df['Time'], format='%H.%M.%S')
+ # Dropping the original 'Date' column if not needed
+ df = df.drop(columns=['Date','Time'])
+ # Splitting the data into features (X) and target variable (y)
+ X = df.drop(columns=['CO(GT)'])
+ y = df['CO(GT)']
+ # Splitting the data into training and testing sets (80% train, 20% test)
+ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+ # Model Training (Linear Regression)
+ model = LinearRegression()
+ model.fit(X_train, y_train)
+ # Model Evaluation
+ y_pred = model.predict(X_test)
+ mae = mean_absolute_error(y_test, y_pred)
+ mse = mean_squared_error(y_test, y_pred)
+ rmse = mean_squared_error(y_test, y_pred, squared=False)
+ print("Mean Absolute Error:", mae)
+ print("Mean Squared Error:", mse)
+ print("Root Mean Squared Error:", rmse)
+ Mean Absolute Error: 0.17794055006131818
+    Mean Squared Error: 0.0579252942473791
+    Root Mean Squared Error: 0.24067674222362886
+ Support Vector Machines (SVM):
+ # Define and train the SVM model
+ svm_model = SVR(kernel='linear')  # You can choose different kernels like 'rbf', 'poly', etc.
+ svm_model.fit(X_train, y_train)
+ # Make predictions
+ y_pred_svm = svm_model.predict(X_test)
+ # Evaluate the model
+ mae_svm = mean_absolute_error(y_test, y_pred_svm)
+ mse_svm = mean_squared_error(y_test, y_pred_svm)
+ rmse_svm = mean_squared_error(y_test, y_pred_svm, squared=False)
+ print("SVM Mean Absolute Error:", mae_svm)
+ print("SVM Mean Squared Error:", mse_svm)
+ print("SVM Root Mean Squared Error:", rmse_svm)
+ SVM Mean Absolute Error: 0.8881720115877912
+    SVM Mean Squared Error: 1.4618112541011439
+    SVM Root Mean Squared Error: 1.209053867328145
+Decision Trees
+ # Model Training (Decision Tree Regression)
+ dt_model = DecisionTreeRegressor()
+ dt_model.fit(X_train, y_train)
+ # Model Evaluation
+ y_pred_dt = dt_model.predict(X_test)
+ mae_dt = mean_absolute_error(y_test, y_pred_dt)
+ mse_dt = mean_squared_error(y_test, y_pred_dt)
+ rmse_dt = mean_squared_error(y_test, y_pred_dt, squared=False)
+ print("Decision Tree Mean Absolute Error:", mae_dt)
+ print("Decision Tree Mean Squared Error:", mse_dt)
+ print("Decision Tree Root Mean Squared Error:", rmse_dt)
+ Decision Tree Mean Absolute Error: 0.22048192771084338
+    Decision Tree Mean Squared Error: 0.11313253012048194
+    Decision Tree Root Mean Squared Error: 0.3363517951795143
